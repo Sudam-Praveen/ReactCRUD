@@ -17,7 +17,7 @@ export default function () {
 
     return (
         <div>
-            <table class="table">
+            <table className="table">
                 <thead>
                     <tr>
                         <th scope="col">No</th>
