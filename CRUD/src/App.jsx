@@ -8,6 +8,7 @@ import NavBar from './layout/NavBar'
 import Home from './pages/Home'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import AddUser from './Users/AddUser'
+import EditUser from './Users/EditUser'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -19,6 +20,7 @@ function App() {
         <Routes>
           <Route exact path='/' element={<Home></Home>}></Route>
           <Route exact path='/addUser' element={<AddUser></AddUser>}></Route>
+          <Route exact path='/edituser/:id' element={<EditUser></EditUser>}></Route>
         </Routes>
       </Router>
 
