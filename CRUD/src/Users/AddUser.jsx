@@ -1,6 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 export default function AddUser() {
+
+  const [user, setUser] = useState({
+    name: "",
+    userName: "",
+    email: ""
+  })
+
+  const { name, userName, email } = user;
+
+  const onInputChange = (e) => {
+    console.log(e);
+    setUser({ ...user, [e.target.name]: e.target.value })
+  }
+
   return (
     <div className='container'>
       <div className="row">
@@ -12,17 +26,35 @@ export default function AddUser() {
 
           <div className="mb-3">
             <label htmlFor="Name" className='form-label'>Name</label>
-            <input type="text" className='form-control' placeholder='Enter Name' name='name' />
+            <input
+              onChange={(e) => onInputChange(e)}
+              value={name}
+              type="text"
+              className='form-control'
+              placeholder='Enter Name'
+              name='name' />
           </div>
 
           <div className="mb-3">
             <label htmlFor="Username" className='form-label'>UserName</label>
-            <input type="text" className='form-control' placeholder='Enter UserName' name='username' />
+            <input
+              onChange={(e) => onInputChange(e)}
+              value={userName}
+              type="text"
+              className='form-control'
+              placeholder='Enter UserName'
+              name='userName' />
           </div>
 
           <div className="mb-3">
             <label htmlFor="Email" className='form-label'>Email</label>
-            <input type="text" className='form-control' placeholder='Enter email' name='email' />
+            <input
+              onChange={(e) => onInputChange(e)}
+              value={email}
+              type="text"
+              className='form-control'
+              placeholder='Enter email'
+              name='email' />
           </div>
 
           <button className='btn btn-outline-primary' type='submit'>Submit</button>
