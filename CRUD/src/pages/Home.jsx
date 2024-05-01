@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2'
 
 export default function () {
 
@@ -17,10 +18,25 @@ export default function () {
     }
 
     //delete the user
-    const deleteUser = async (id)=>{
-        await axios.delete(`http://localhost:8080/user/${id}`)
-        loadUsers()
+    const deleteUser = async (id) => {
+        Swal.fire({
+            title: "Do you want to Delete this User ?",
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: "Delete",
+            denyButtonText: `Don't delete`
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                Swal.fire("Deleted!", "", "success");
+    
+                await axios.delete(`http://localhost:8080/user/${id}`);
+                loadUsers(); // Reload user details
+            } else if (result.isDenied) {
+                Swal.fire("User is not Deleted", "", "info");
+            }
+        });
     }
+    
 
     return (
         <div>

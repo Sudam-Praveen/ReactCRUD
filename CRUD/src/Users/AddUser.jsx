@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 export default function AddUser() {
   let navigate = useNavigate();
@@ -18,18 +19,38 @@ export default function AddUser() {
 
   const onSubmitFunction = async (e) => {
     e.preventDefault();
-    await axios.post("http://localhost:8080/add-user", user);
-    navigate("/");
+
+   
+      Swal.fire({
+        title: "Do you want to add this User ?",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: "yes add",
+        denyButtonText: `Don't add`,
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          try {
+            await axios.post("http://localhost:8080/add-user", user);
+            Swal.fire("User added!", "", "success");
+            navigate("/");
+          } catch (error) {
+            Swal.fire("Error occurred", "Failed to add user", "error");
+          }
+        } else if (result.isDenied) {
+          Swal.fire("User is not added", "", "info");
+        }
+      });
+    
+
+    
   };
   return (
     <div className="container">
       <div className="row">
-
         <div className="col-md-6 offset-md-3 py-4 mt-2 rounded shadow border">
           <h2 className="text-center m-4">Register User</h2>
 
           <form onSubmit={(e) => onSubmitFunction(e)}>
-
             <div className="mb-3">
               <label htmlFor="Name" className="form-label">
                 Name
@@ -41,6 +62,7 @@ export default function AddUser() {
                 name="name"
                 onChange={(e) => onInputChange(e)}
                 placeholder="Enter Name"
+                required
               />
             </div>
 
@@ -55,6 +77,7 @@ export default function AddUser() {
                 name="userName"
                 onChange={(e) => onInputChange(e)}
                 placeholder="Enter Username"
+                required
               />
             </div>
 
@@ -69,9 +92,10 @@ export default function AddUser() {
                 name="email"
                 onChange={(e) => onInputChange(e)}
                 placeholder="Enter Email"
+                required
               />
             </div>
-            
+
             <button className="btn btn-outline-primary" type="submit">
               Submit
             </button>

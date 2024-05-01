@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Link, useNavigate, useParams } from 'react-router-dom'
+import Swal from 'sweetalert2'
 
 export default function EditUser() {
     let navigate = useNavigate()
@@ -23,6 +24,12 @@ export default function EditUser() {
     const onSubmitFunction = async (e) => {
         e.preventDefault();
         await axios.put(`http://localhost:8080/user/${id}`, user)
+        Swal.fire({
+            icon: "success",
+            title: "Updated Successfully",
+            showConfirmButton: false,
+            timer: 1500
+          });
         navigate('/')
     }
 
@@ -59,6 +66,7 @@ export default function EditUser() {
                                 name='name'
                                 onChange={(e) => onInputChange(e)}
                                 placeholder='Enter Name'
+                                required
                             />
                         </div>
                         <div className="mb-3">
@@ -70,6 +78,7 @@ export default function EditUser() {
                                 name='userName'
                                 onChange={(e) => onInputChange(e)}
                                 placeholder='Enter Username'
+                                required
                             />
                         </div>
                         <div className="mb-3">
@@ -81,6 +90,7 @@ export default function EditUser() {
                                 name='email'
                                 onChange={(e) => onInputChange(e)}
                                 placeholder='Enter Email'
+                                required
                             />
                         </div>
                         <button className='btn btn-outline-primary' type='submit'>Update</button>
