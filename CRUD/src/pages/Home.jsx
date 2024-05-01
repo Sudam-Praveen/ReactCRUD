@@ -16,26 +16,36 @@ export default function () {
         console.log(results.data);
         setUsers(results.data)
     }
+   
+  
 
     //delete the user
     const deleteUser = async (id) => {
-        Swal.fire({
-            title: "Do you want to Delete this User ?",
-            showDenyButton: true,
-            showCancelButton: true,
-            confirmButtonText: "Delete",
-            denyButtonText: `Don't delete`
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                Swal.fire("Deleted!", "", "success");
+        try {
+            const results = await axios.get(`http://localhost:8080/user/${id}`);
+           
     
-                await axios.delete(`http://localhost:8080/user/${id}`);
-                loadUsers(); // Reload user details
-            } else if (result.isDenied) {
-                Swal.fire("User is not Deleted", "", "info");
-            }
-        });
+            Swal.fire({
+                title: `Do you want to Delete this User <b> " ${results.data.name} "</b>?`,
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: "Delete",
+                denyButtonText: `Don't delete`
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    Swal.fire("Deleted!", "", "success");
+        
+                    await axios.delete(`http://localhost:8080/user/${id}`);
+                    loadUsers(); // Reload user details
+                } else if (result.isDenied) {
+                    Swal.fire("User is not Deleted", "", "info");
+                }
+            });
+        } catch (error) {
+            console.error("Error fetching user data:", error);
+        }
     }
+    
     
 
     return (
