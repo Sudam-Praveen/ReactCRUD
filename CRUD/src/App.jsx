@@ -9,6 +9,7 @@ import Home from './pages/Home'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import AddUser from './Users/AddUser'
 import EditUser from './Users/EditUser'
+import ViewUser from './Users/ViewUser'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -21,6 +22,7 @@ function App() {
           <Route exact path='/' element={<Home></Home>}></Route>
           <Route exact path='/addUser' element={<AddUser></AddUser>}></Route>
           <Route exact path='/edituser/:id' element={<EditUser></EditUser>}></Route>
+          <Route exact path='/viewUser/:id' element={<ViewUser></ViewUser>}></Route>
         </Routes>
       </Router>
 
